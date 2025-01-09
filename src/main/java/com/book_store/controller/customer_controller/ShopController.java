@@ -30,6 +30,7 @@ import java.util.Set;
 @RequestMapping("/product")
 @Controller
 public class ShopController {
+
     @Autowired
     private ProductService productService;
 
@@ -70,25 +71,36 @@ public class ShopController {
         int totalPages = page.getTotalPages();
         List<Product> listproduct = page.getContent();
         List<Product> listproductRegister = new ArrayList<>();
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        double total=0.0;
+        double total = 0.0;
         List<Cart> cartList = new ArrayList<>();
         User user = null;
-        if(!(authentication == null || authentication instanceof AnonymousAuthenticationToken)) {
-            user = userService.findByUsername(authentication.getName());
-            cartList = cartService.getCustomerCart(user.getCustomer().getId());
-            model.addAttribute("listCart", cartList);
-            for (Cart cart : cartList){
-                total+=cart.getQuantity()* Double.parseDouble(String.valueOf(cart.getProduct().getPrice()));
+
+        // Fixing the casting issue with authentication principal
+        if (!(authentication == null || authentication instanceof AnonymousAuthenticationToken)) {
+            // Check if the principal is an instance of MyUserDetail before casting
+            if (authentication.getPrincipal() instanceof MyUserDetail) {
+                MyUserDetail myUserDetail = (MyUserDetail) authentication.getPrincipal();
+                user = myUserDetail.getUser(); // Access user from MyUserDetail
+
+                cartList = cartService.getCustomerCart(user.getCustomer().getId());
+                model.addAttribute("listCart", cartList);
+
+                for (Cart cart : cartList) {
+                    total += cart.getQuantity() * Double.parseDouble(String.valueOf(cart.getProduct().getPrice()));
+                }
+
+                long countNoti = notifyService.findByCustomer(user.getCustomer().getId()).stream()
+                        .filter(no -> no.getStatus() == 1)
+                        .count();
+                model.addAttribute("notifyCount", countNoti);
+                model.addAttribute("notify", notifyService.findByCustomer(user.getCustomer().getId()));
+                model.addAttribute("user", user);
             }
         }
-        long countNoti = notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()).stream()
-                .filter(no -> no.getStatus() == 1)
-                .count();
-        model.addAttribute("notifyCount", countNoti);
-        model.addAttribute("notify", notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()));
-        model.addAttribute("user", user);
-        model.addAttribute("subtotal",total);
+
+        model.addAttribute("subtotal", total);
         model.addAttribute("listCart", cartList);
         model.addAttribute("listproductRegister", listproductRegister);
         model.addAttribute("listproduct", listproduct);
@@ -100,23 +112,79 @@ public class ShopController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("keyword", keyword);
         model.addAttribute("categoryId", categoryId);
-        model.addAttribute("query", "?sortField=" + sortField + "&sortDir="
-                + sortDir + "&keyword=" + keyword + "&categoryId=" + categoryId);
+        model.addAttribute("query", "?sortField=" + sortField + "&sortDir=" + sortDir + "&keyword=" + keyword + "&categoryId=" + categoryId);
         model.addAttribute("categoryList", productService.getCategoryList());
         model.addAttribute("size_carts", cartService.getCartSize());
         model.addAttribute("product_hot", productService.getProductHot());
         return "products";
     }
 
+//    @GetMapping("/productdetail/{id}")
+//    public String viewProductDetail(Model model,
+//                                    @PathVariable(name = "id") int currentProduct,
+//                                    @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir) {
+//        model.addAttribute("categoryList", productService.getCategoryList());
+//        return productDetail(1, sortDir, currentProduct, model);
+//    }
+@GetMapping("/productdetail/{id}")
+public String viewProductDetail(Model model,
+                                @PathVariable(name = "id") int currentProduct,
+                                @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir) {
+    // Get the Authentication object
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    double total = 0.0;
+    List<Cart> cartList = new ArrayList<>();
+    User user = null;
 
-    //function view feedbackList
-    @GetMapping("/productdetail/{id}")
-    public String viewProductDetail(Model model,
-                                    @PathVariable(name = "id") int currentProduct,
-                                    @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir) {
-        model.addAttribute("categoryList", productService.getCategoryList());
-        return productDetail(1, sortDir, currentProduct, model);
+    // Add category list to the model
+    model.addAttribute("categoryList", productService.getCategoryList());
+
+    // Check if the user is authenticated and if the principal is of type MyUserDetail
+    if (authentication != null) {
+        Object principal = authentication.getPrincipal();
+
+        // Safe check for the principal type
+        if (principal instanceof MyUserDetail) {
+            // Cast the principal to MyUserDetail
+            MyUserDetail myUserDetail = (MyUserDetail) principal;
+            user = myUserDetail.getUser();
+
+            // Add the user to the model
+            model.addAttribute("user", user);
+
+            // Fetch the user's cart list
+            cartList = cartService.getCustomerCart(user.getCustomer().getId());
+            model.addAttribute("listCart", cartList);
+
+            // Calculate the total price of items in the cart
+            for (Cart cart : cartList) {
+                total += cart.getQuantity() * Double.parseDouble(String.valueOf(cart.getProduct().getPrice()));
+            }
+
+            // Fetch unread notifications for the user
+            long unreadNotificationCount = notifyService.findByCustomer(user.getCustomer().getId()).stream()
+                    .filter(notification -> notification.getStatus() == 1) // Status 1 indicates unread notifications
+                    .count();
+
+            // Add notification count and notification list to the model
+            model.addAttribute("notifyCount", unreadNotificationCount);
+            model.addAttribute("notify", notifyService.findByCustomer(user.getCustomer().getId()));
+        } else if (principal instanceof String) {
+            // Log or handle the case where the principal is just a String (username)
+            // For example, you can redirect the user to the login page if not authenticated
+            model.addAttribute("error", "User is not authenticated or logged in incorrectly.");
+            return "redirect:/login";  // Redirect to login page if principal is not MyUserDetail
+        }
     }
+
+    // Add the total price to the model if needed
+    model.addAttribute("totalPrice", total);
+
+    // Call the productDetail method to display product details
+    return productDetail(1, sortDir, currentProduct, model);
+}
+
+
 
     @GetMapping("/productdetail/{id}/{pageNumber}")
     public String productDetail(@PathVariable(name = "pageNumber") int currentPage,
@@ -140,12 +208,11 @@ public class ShopController {
                     flag = true;
                 }
             }
-            if(user != null) {
+            if (user != null) {
                 cartList = cartService.getCustomerCart(user.getCustomer().getId());
             }
             model.addAttribute("userCurent", user);
             model.addAttribute("user", user);
-
         }
 
         long countNoti = notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()).stream()
@@ -165,8 +232,7 @@ public class ShopController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("categoryList", productService.getCategoryList());
-        model.addAttribute("query", "?sortDir="
-                + sortDir);
+        model.addAttribute("query", "?sortDir=" + sortDir);
         model.addAttribute("size_carts", cartService.getCartSize());
         model.addAttribute("sortField", "id");
         model.addAttribute("product_hot", productService.getProductHot());
@@ -185,11 +251,11 @@ public class ShopController {
             model.addFlashAttribute("alert", "Ảnh sai định dạng! (.jpeg or .png or  .jpg)");
             return new RedirectView("/product/productdetail/" + productId);
         }
-        if(fileName.equals("") && (feedback.getContent().equals("") || feedback.getContent()==null)){
+        if (fileName.equals("") && (feedback.getContent().equals("") || feedback.getContent() == null)) {
             model.addFlashAttribute("alert", "Nhập ảnh của bạn hoặc nhập ảnh đánh giá!!!");
             return new RedirectView("/product/productdetail/" + productId);
         }
-        if(!fileName.equals("")){
+        if (!fileName.equals("")) {
             feedback.setImage(fileName);
         }
         feedback.setContent(feedback.getContent());
@@ -198,7 +264,7 @@ public class ShopController {
         feedback.setCustomer(customer);
         feedback.setProduct(productService.getProduct(productId));
         Feedback feedbackSave = feedbackService.saveFeedback(feedback);
-        if(!fileName.equals("")){
+        if (!fileName.equals("")) {
             Path uploadPath = Paths.get("feedback_image/" + feedbackSave.getId());
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
@@ -210,10 +276,11 @@ public class ShopController {
                 throw new IOException("Could not save Image: " + fileName);
             }
         }
+
         return new RedirectView("/product/productdetail/" + productId);
     }
 
-    @RequestMapping("/deleteFeedback/{id}")
+@RequestMapping("/deleteFeedback/{id}")
     public String deleteFeedback(@PathVariable(name = "id") int id) throws IOException {
         boolean flag = true;
         Feedback feedback = feedbackService.getFeedback(id);
