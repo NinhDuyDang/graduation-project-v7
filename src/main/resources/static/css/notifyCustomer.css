@@ -1,0 +1,102 @@
+/* General dropdown style */
+.tg-themedropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.tg-themedropdownmenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    width: 320px; /* Adjust width as needed */
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Show dropdown on hover */
+.tg-themedropdown:hover .tg-themedropdownmenu {
+    display: block;
+}
+
+/* Notification items */
+.tg-themedropdownmenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tg-themedropdownmenu li {
+    padding: 10px 0;
+    border-bottom: 1px solid #d9d9d9; /* Add a bottom border */
+    transition: background-color 0.3s ease;
+}
+
+.tg-themedropdownmenu li:last-child {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+.tg-themedropdownmenu li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    font-size: 14px;
+}
+
+.tg-themedropdownmenu li a:hover {
+    color: #007bff;
+}
+
+.tg-themedropdownmenu li p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+    border-bottom: 2px solid #2a3e50;
+}
+
+.tg-themedropdownmenu li span {
+    font-weight: bold;
+    color: #333;
+    display: block;
+}
+
+/* Dimmed (unread) notifications */
+.tg-themedropdownmenu li.dimmed {
+    background-color: #f9f9f9;
+}
+
+.tg-themedropdownmenu li.dimmed:hover {
+    background-color: #f1f1f1;
+}
+
+/* Remove bullet point */
+.tg-themedropdownmenu li::marker {
+    content: none;
+}
+
+/* Badge styling */
+.tg-themebadge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #dc3545;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 12px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+}
+
+/* Adjust for small screens */
+@media (max-width: 768px) {
+    .tg-themedropdownmenu {
+        width: 100%;
+        left: 0;
+    }
+}
