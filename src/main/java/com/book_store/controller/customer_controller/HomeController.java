@@ -53,33 +53,6 @@ public class HomeController {
                 }
             }
         }
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        List<Cart> cartList = new ArrayList<>();
-//        User user = null;
-//        if(!(authentication == null || authentication instanceof AnonymousAuthenticationToken)) {
-//            user = userService.findByUsername(authentication.getName());
-//            cartList = cartService.getCustomerCart(user.getCustomer().getId());
-//        }
-//        long countNoti = notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()).stream()
-//                .filter(no -> no.getStatus() == 1)
-//                .count();
-//        model.addAttribute("notifyCount", countNoti);
-//        model.addAttribute("notify", notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()));
-//        model.addAttribute("user", user);
-//        model.addAttribute("listCart", cartList);
-//        List<Product> productList = productService.getProductHotByCount();
-//        model.addAttribute("listCategories", productService.getCategoryList());
-//        model.addAttribute("categoryList", productService.getCategoryList());
-//        model.addAttribute("keyword","");
-//        model.addAttribute("listproduct",productList);
-//        model.addAttribute("listProductsbyCategory1",productService.getProductbyCategoryId(productService.getCategoryList().get(0).getId()));
-//        model.addAttribute("listProductsbyCategory2",productService.getProductbyCategoryId(productService.getCategoryList().get(1).getId()));
-//        model.addAttribute("listProductsbyCategory3",productService.getProductbyCategoryId(productService.getCategoryList().get(2).getId()));
-//        model.addAttribute("size_carts", cartService.getCartSize());
-//        model.addAttribute("sortField", "id");
-//        model.addAttribute("sortDir", "asc");
-//        return "index";
-//    }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<Cart> cartList = new ArrayList<>();
         User user = null;

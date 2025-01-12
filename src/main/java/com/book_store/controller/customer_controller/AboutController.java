@@ -41,27 +41,6 @@ public class AboutController {
 
     @GetMapping()
     public String getUserandCartNavBar(Model model) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        User user = null;
-//        List<Cart> cartList = new ArrayList<>();
-//
-//        if(!(authentication == null || authentication instanceof AnonymousAuthenticationToken)) {
-//            user = userService.findByUsername(authentication.getName());
-//            cartList = cartService.getCustomerCart(user.getCustomer().getId());
-//        }
-//        long countNoti = notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()).stream()
-//                .filter(no -> no.getStatus() == 1)
-//                .count();
-//        model.addAttribute("notifyCount", countNoti);
-//        model.addAttribute("notify", notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()));
-//        model.addAttribute("user", user);
-//        model.addAttribute("listCart", cartList);
-//        model.addAttribute("categoryList", productService.getCategoryList());
-//        model.addAttribute("size_carts", cartService.getCartSize());
-//        model.addAttribute("sortField", "id");
-//        model.addAttribute("sortDir", "asc");
-//        return "about";
-//    }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = null;
         List<Cart> cartList = new ArrayList<>();
@@ -103,26 +82,6 @@ public class AboutController {
     }
         @GetMapping({"/support1"})
     public String support1(Model model) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        User user = null;
-//        List<Cart> cartList = new ArrayList<>();
-//        if(!(authentication == null || authentication instanceof AnonymousAuthenticationToken)) {
-//            user = userService.findByUsername(authentication.getName());
-//            cartList = cartService.getCustomerCart(user.getCustomer().getId());
-//        }
-//        long countNoti = notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()).stream()
-//                .filter(no -> no.getStatus() == 1)
-//                .count();
-//        model.addAttribute("notifyCount", countNoti);
-//        model.addAttribute("notify", notifyService.findByCustomer(((MyUserDetail) authentication.getPrincipal()).getUser().getCustomer().getId()));
-//        model.addAttribute("user", user);
-//        model.addAttribute("listCart", cartList);
-//        model.addAttribute("categoryList", productService.getCategoryList());
-//        model.addAttribute("size_carts", cartService.getCartSize());
-//        model.addAttribute("sortField", "id");
-//        model.addAttribute("sortDir", "asc");
-//        return "support1";
-//    }
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             User user = null;
             List<Cart> cartList = new ArrayList<>();
