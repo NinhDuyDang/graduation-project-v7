@@ -106,14 +106,60 @@
                                 </div>
 
                             </div>
+<!--                            <div class="dropdown tg-themedropdown tg-minicartdropdown">-->
+<!--                                <a href="javascript:void(0);" id="tg-minicart" class="tg-btnthemedropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                                    <span class="tg-themebadge" th:text="${size_carts}"></span>-->
+<!--                                    <i class="icon-cart"></i>-->
+<!--&lt;!&ndash;                                    <span class="price" th:text="${subtotal}" th:attr="data-price=${subtotal}"></span>&ndash;&gt;-->
+<!--                                </a>-->
+<!--                                <div class="dropdown-menu tg-themedropdownmenu" aria-labelledby="tg-minicart" style="padding: 20px">-->
+<!--                                    <th:block th:if="${listCart != null and listCart.size() > 0}">-->
+<!--                                        <div class="tg-minicartbody" th:each="cart : ${listCart}">-->
+<!--                                            <div class="tg-minicarproduct">-->
+<!--                                                <figure style="max-width: 110px;">-->
+<!--                                                    <img th:src="${cart.product.image}" alt="image description">-->
+<!--                                                </figure>-->
+<!--                                                <div class="tg-minicarproductdata">-->
+<!--                                                    <h5 th:text="${cart.product.name}"></h5>-->
+<!--                                                    <h6 class="price" th:text="${cart.product.price}+' VND'" th:attr="data-price=${cart.product.price}"></h6>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </th:block>-->
+<!--                                    <th:block th:if="${listCart == null or listCart.size() == 0}">-->
+<!--                                        <h4 style="text-align: center; color: red"> Giỏ hàng trống, <a th:href="@{/product/listproducts}">Mua sắm ngay!</a></h4>-->
+<!--                                    </th:block>-->
+<!--                                    <div class="tg-minicartfoot">-->
+<!--                                        <a class="tg-btnemptycart" th:href="@{/cart/clearCart}">-->
+<!--                                            <i class="fa fa-trash-o"></i>-->
+<!--                                            <span>Xoá giỏ hàng</span>-->
+<!--                                        </a>-->
+<!--&lt;!&ndash;                                        <span class="tg-subtotal">Tổng phụ: <strong class="price" th:text="${subtotal}+ ' VND'" th:attr="data-price=${subtotal}"></strong></span>&ndash;&gt;-->
+<!--                                        <div class="tg-btns">-->
+<!--                                            <a class="tg-btn tg-active" th:href="@{/cart/}">Xem giỏ hàng</a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <div class="dropdown tg-themedropdown tg-minicartdropdown">
                                 <a href="javascript:void(0);" id="tg-minicart" class="tg-btnthemedropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="tg-themebadge" th:text="${size_carts}"></span>
                                     <i class="icon-cart"></i>
-                                    <span class="price" th:text="${subtotal}" th:attr="data-price=${subtotal}"></span>
                                 </a>
-                                <div class="dropdown-menu tg-themedropdownmenu" aria-labelledby="tg-minicart" style="padding: 20px">
+                                <div class="dropdown-menu tg-themedropdownmenu" aria-labelledby="tg-minicart" style="padding: 20px; max-height: 400px; overflow-y: auto; overflow-x: hidden;">
+                                    <style>
+                                        .tg-themedropdownmenu::-webkit-scrollbar {
+                                            width: 8px;
+                                        }
+                                        .tg-themedropdownmenu::-webkit-scrollbar-thumb {
+                                            background-color: #ccc;
+                                            border-radius: 4px;
+                                        }
+                                        .tg-themedropdownmenu::-webkit-scrollbar-thumb:hover {
+                                            background-color: #aaa;
+                                        }
+                                    </style>
                                     <th:block th:if="${listCart != null and listCart.size() > 0}">
                                         <div class="tg-minicartbody" th:each="cart : ${listCart}">
                                             <div class="tg-minicarproduct">
@@ -128,20 +174,20 @@
                                         </div>
                                     </th:block>
                                     <th:block th:if="${listCart == null or listCart.size() == 0}">
-                                        <h4 style="text-align: center; color: red"> Giỏ hàng trống, <a th:href="@{/product/listproducts}">Mua sắm ngay!</a></h4>
+                                        <h4 style="text-align: center; color: red;">Giỏ hàng trống, <a th:href="@{/product/listproducts}">Mua sắm ngay!</a></h4>
                                     </th:block>
                                     <div class="tg-minicartfoot">
                                         <a class="tg-btnemptycart" th:href="@{/cart/clearCart}">
                                             <i class="fa fa-trash-o"></i>
                                             <span>Xoá giỏ hàng</span>
                                         </a>
-                                        <span class="tg-subtotal">Tổng phụ: <strong class="price" th:text="${subtotal}+ ' VND'" th:attr="data-price=${subtotal}"></strong></span>
                                         <div class="tg-btns">
                                             <a class="tg-btn tg-active" th:href="@{/cart/}">Xem giỏ hàng</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="tg-searchbox">
                             <form class="tg-formtheme tg-formsearch" th:action="@{'/product/listproducts'}">

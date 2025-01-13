@@ -119,13 +119,6 @@ public class ShopController {
         return "products";
     }
 
-//    @GetMapping("/productdetail/{id}")
-//    public String viewProductDetail(Model model,
-//                                    @PathVariable(name = "id") int currentProduct,
-//                                    @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir) {
-//        model.addAttribute("categoryList", productService.getCategoryList());
-//        return productDetail(1, sortDir, currentProduct, model);
-//    }
 @GetMapping("/productdetail/{id}")
 public String viewProductDetail(Model model,
                                 @PathVariable(name = "id") int currentProduct,
@@ -170,8 +163,7 @@ public String viewProductDetail(Model model,
             model.addAttribute("notifyCount", unreadNotificationCount);
             model.addAttribute("notify", notifyService.findByCustomer(user.getCustomer().getId()));
         } else if (principal instanceof String) {
-            // Log or handle the case where the principal is just a String (username)
-            // For example, you can redirect the user to the login page if not authenticated
+
             model.addAttribute("error", "User is not authenticated or logged in incorrectly.");
             return "redirect:/login";  // Redirect to login page if principal is not MyUserDetail
         }
