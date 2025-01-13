@@ -88,7 +88,8 @@
                         <div class="tg-wishlistandcart">
                             <div class="dropdown tg-themedropdown tg-wishlistdropdown">
                                 <a href="javascript:void(0);" id="tg-wishlisst" class="tg-btnthemedropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="tg-themebadge" th:text="${notifyCount}"></span>
+<!--                                    <span class="tg-themebadge" th:text="${notifyCount}"></span>-->
+                                    <span class="tg-themebadge" th:if="${notifyCount > 0}" th:text="${notifyCount}"></span>
                                     <i class="icon-heart"></i>
                                 </a>
 
@@ -144,7 +145,9 @@
 
                             <div class="dropdown tg-themedropdown tg-minicartdropdown">
                                 <a href="javascript:void(0);" id="tg-minicart" class="tg-btnthemedropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="tg-themebadge" th:text="${size_carts}"></span>
+<!--                                    <span class="tg-themebadge" th:text="${size_carts}"></span>-->
+                                    <span class="tg-themebadge" th:if="${size_carts > 0}" th:text="${size_carts}"></span>
+
                                     <i class="icon-cart"></i>
                                 </a>
                                 <div class="dropdown-menu tg-themedropdownmenu" aria-labelledby="tg-minicart" style="padding: 20px; max-height: 400px; overflow-y: auto; overflow-x: hidden;">

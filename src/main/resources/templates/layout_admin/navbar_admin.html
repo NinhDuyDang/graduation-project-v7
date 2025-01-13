@@ -30,7 +30,8 @@
                     <a class="navbar-brand" sec:authentication="name"></a>
                     <div class="notification-icon" onclick="toggleNotifications()">
                         <i class="fas fa-bell"></i>
-                        <span class="notification-count" th:text="${notifyCount}"></span>
+<!--                        <span class="notification-count" th:text="${notifyCount}"></span>-->
+                        <span class="notification-count" th:if="${notifyCount > 0}" th:text="${notifyCount}"></span>
                     </div>
                     <div class="notification-list hidden">
                         <ul th:each="noti : ${notify}">
