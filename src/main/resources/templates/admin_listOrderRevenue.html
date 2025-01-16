@@ -254,14 +254,14 @@
                 th:attr="data-price=${order.price.longValue()}"></td>
             <td th:text="${order.paymentMethod}"></td>
             <td th:switch="${order.paymentStatus}">
-              <p th:case="'0'">Unpaid</p>
-              <p th:case="'1'">Paid</p>
+              <p th:case="'0'">Chưa thanh toán</p>
+              <p th:case="'1'">Đã thanh toán</p>
             </td>
             <td th:switch="${order.status}">
-              <p th:case="'0'">Processing</p>
-              <p th:case="'1'">Shipping</p>
-              <p th:case="'2'">Finished</p>
-              <p th:case="'3'">Canceled</p>
+              <p th:case="'0'">Đang xử lý</p>
+              <p th:case="'1'">Đang vận chuyển</p>
+              <p th:case="'2'">Hoàn thành</p>
+              <p th:case="'3'">Hủy bỏ</p>
             </td>
             <td th:text="${order.createdAt}"></td>
             <td style="text-align: center">

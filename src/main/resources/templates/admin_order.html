@@ -272,8 +272,8 @@
                                             th:attr="data-price=${order.price.longValue()}"></td>
                                         <td th:text="${order.paymentMethod==1?'Banking':'Ship cod'}"></td>
                                         <td th:switch="${order.paymentStatus}">
-                                            <p th:case="'0'">Unpaid</p>
-                                            <p th:case="'1'">Paid</p>
+                                            <p th:case="'0'">Chưa thanh toán</p>
+                                            <p th:case="'1'">Đã thanh toán</p>
                                         </td>
                                         <td th:switch="${order.status}">
                                             <p th:case="'0'">Đang xử lý</p>

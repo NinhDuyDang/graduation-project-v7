@@ -38,8 +38,8 @@ public class UserService {
     }
 
     public void sendVerificationEmail(User user, String siteUrl) throws MessagingException, UnsupportedEncodingException {
-        String subject = "Congratulation";
-        String senderName = "Đây là đồ án";
+        String subject = "Congratulations";
+        String senderName = "This is a project";
         String content = "<table style=\"width: 100% !important\" >\n" +
                 "            <tbody>\n" +
                 "                <tr>\n" +
@@ -48,19 +48,19 @@ public class UserService {
                 "                            <h2>Hello " + user.getUsername() + "</h2>\n" +
                 "                        </div>\n" +
                 "                        <div>\n" +
-                "                            Gần đây bạn đã đăng ký tài khoản của mình trong hệ thống của chúng tôi. Chúng tôi rất vui vì bạn đã chọn cửa hàng của chúng tôi.\n" +
+                "                            Recently, you registered your account in our system. We are delighted that you chose our store.\n" +
                 "                        </div>\n" +
                 "                        <br>\n" +
                 "\n" +
                 "                        <div>\n" +
-                "                            Tận hưởng mua sắm tại trang web của chúng tôi: \n" +
-                "                            <a href=\"http://160.30.161.63:8080/\" target=\"_blank\">Click để mua sắm</a>\n" +
+                "                            Enjoy shopping on our website: \n" +
+                "                            <a href=\"http://160.30.161.63:8080/\" target=\"_blank\">Click to shop</a>\n" +
                 "                        </div>\n" +
                 "\n" +
                 "                        <br>\n" +
                 "                        <div>\n" +
-                "                            Trân trọng\n,\n" +
-                "                            <h4>Đây là đồ án </h4>\n" +
+                "                            Best regards,\n" +
+                "                            <h4>This is a project</h4>\n" +
                 "                        </div>\n" +
                 "                    </td>\n" +
                 "                </tr>\n" +
