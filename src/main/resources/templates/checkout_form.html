@@ -252,9 +252,9 @@
                                                         var paymentMethod = document.getElementById("paymentMethodSelect").value;
                                                         var shippingUnit = document.getElementById("shippingUnit").value;
 
-                                                        // Kiểm tra các trường đã được điền chưa
                                                         if (!receiverName || !receiverPhone || !receiverAddress || !paymentMethod || !shippingUnit) {
-                                                            alert("Vui lòng điền đầy đủ thông tin!");
+                                                            // alert("Vui lòng điền đầy đủ thông tin!");
+                                                            alert('Thieu thong tin: ' + 'receiverName: '+ receiverName + 'receiverPhone' + receiverPhone + 'receiverAddress'  + receiverAddress + 'paymentMethod'  + paymentMethod + 'shippingUnit' + shippingUnit)
                                                             return;
                                                         }
 

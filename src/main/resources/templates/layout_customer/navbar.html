@@ -218,6 +218,42 @@
                                     <span class="icon-bar"></span>
                                 </button>
                             </div>
+
+
+<!--                            <div id="tg-navigation" class="collapse navbar-collapse tg-navigation">-->
+<!--                                <ul>-->
+<!--                                    <li class="menu-item-has-children menu-item-has-mega-menu">-->
+<!--                                        <a href="javascript:void(0);">Danh mục sản phẩm</a>-->
+<!--                                        <div class="mega-menu">-->
+<!--                                            <ul>-->
+<!--                                                <li th:each="category:${categoryList}">-->
+<!--                                                    <a th:href="@{'/product/listproducts/1?categoryId='+${category.getId()}+'&sortField='-->
+<!--                                +${sortField}+'&sortDir='+ ${sortDir}+'&keyword= '}"><span th:text="${category.getName()}"></span>-->
+<!--                                                        <em th:text="${category.products.size()}"></em></a></li>-->
+<!--                                                <li><a th:href="@{'/product/listproducts/1?categoryId=-1&sortField='-->
+<!--                                +${sortField}+'&sortDir='+ ${sortDir}+'&keyword= '}"><span>Tất cả sách</span></a></li>-->
+<!--                                            </ul>-->
+
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <a th:href="@{/}">Trang chủ</a>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <a th:href="@{/about}">Về chúng tôi</a>-->
+<!--                                    </li>-->
+<!--                                    <li><a th:href="@{/product/listproducts}">Sản phầm</a></li>-->
+<!--                                    <li class="menu-item-has-children">-->
+<!--                                        <a href="javascript:void(0);">Hỗ trợ khách hàng</a>-->
+<!--                                        <ul class="sub-menu">-->
+<!--                                            <li><a th:href="@{/about/support1}">Hướng dẫn đặt hàng</a></li>-->
+<!--                                            <li><a th:href="@{/about/support2}">Hình thức vận chuyển</a></li>-->
+<!--                                            <li><a th:href="@{/about/support3}">Hướng dẫn thanh toán</a></li>-->
+<!--                                        </ul>-->
+<!--                                    </li>-->
+<!--                                    <li><a>Hotline 0982.768.246</a></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
                             <div id="tg-navigation" class="collapse navbar-collapse tg-navigation">
                                 <ul>
                                     <li class="menu-item-has-children menu-item-has-mega-menu">
@@ -225,22 +261,22 @@
                                         <div class="mega-menu">
                                             <ul>
                                                 <li th:each="category:${categoryList}">
-                                                    <a th:href="@{'/product/listproducts/1?categoryId='+${category.getId()}+'&sortField='
-                                +${sortField}+'&sortDir='+ ${sortDir}+'&keyword= '}"><span th:text="${category.getName()}"></span>
-                                                        <em th:text="${category.products.size()}"></em></a></li>
-                                                <li><a th:href="@{'/product/listproducts/1?categoryId=-1&sortField='
-                                +${sortField}+'&sortDir='+ ${sortDir}+'&keyword= '}"><span>Tất cả sách</span></a></li>
+                                                    <a th:href="@{'/product/listproducts/1?categoryId='+${category.getId()}+'&sortField=' +${sortField}+'&sortDir='+ ${sortDir}+'&keyword= '}">
+                                                        <span th:text="${category.getName()}"></span>
+                                                        <em th:text="${category.products.size()}"></em>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a th:href="@{'/product/listproducts/1?categoryId=-1&sortField=' +${sortField}+'&sortDir='+ ${sortDir}+'&keyword= '}">
+                                                        <span>Tất cả sách</span>
+                                                    </a>
+                                                </li>
                                             </ul>
-
                                         </div>
                                     </li>
-                                    <li>
-                                        <a th:href="@{/}">Trang chủ</a>
-                                    </li>
-                                    <li>
-                                        <a th:href="@{/about}">Về chúng tôi</a>
-                                    </li>
-                                    <li><a th:href="@{/product/listproducts}">Sản phầm</a></li>
+                                    <li><a th:href="@{/}">Trang chủ</a></li>
+                                    <li><a th:href="@{/about}">Về chúng tôi</a></li>
+                                    <li><a th:href="@{/product/listproducts}">Sản phẩm</a></li>
                                     <li class="menu-item-has-children">
                                         <a href="javascript:void(0);">Hỗ trợ khách hàng</a>
                                         <ul class="sub-menu">
@@ -249,9 +285,105 @@
                                             <li><a th:href="@{/about/support3}">Hướng dẫn thanh toán</a></li>
                                         </ul>
                                     </li>
-                                    <li><a>Hotline 0982.768.246</a></li>
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="showBorrowForm()">Mượn sách</a>
+                                    </li>
                                 </ul>
                             </div>
+                            <!-- Popup nền mờ -->
+                            <div id="popupOverlay" onclick="closePopup()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+                            <!-- Popup mượn sách -->
+                            <div id="borrowFormPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); padding: 20px 30px; z-index: 1000; width: 400px; font-family: Arial, sans-serif; animation: fadeIn 0.3s ease-in-out; overflow-y: auto; max-height: 80vh;">
+                                <h3 style="margin-top: 0; font-size: 22px; color: #333; text-align: center; border-bottom: 2px solid #007bff; padding-bottom: 10px;">Đăng ký mượn sách</h3>
+                                <form id="borrowForm">
+                                    <!-- Form fields -->
+                                    <label for="receiverName1" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Họ tên người mượn:</label>
+                                    <input type="text" id="receiverName1" name="receiverName" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;">
+
+                                    <label for="receiverPhone1" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Số điện thoại:</label>
+                                    <input type="text" id="receiverPhone1" name="receiverPhone" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;">
+
+                                    <label for="receiverAddress1" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Địa chỉ:</label>
+                                    <input type="text" id="receiverAddress1" name="receiverAddress" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;">
+
+                                    <label for="bookToBorrow" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Chọn sách:</label>
+                                    <input type="text" id="bookToBorrow" name="bookToBorrow" placeholder="Nhập tên sách muốn mượn" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;">
+
+                                    <label for="idNumber" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Số căn cước công dân:</label>
+                                    <input type="text" id="idNumber" name="idNumber" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;">
+
+                                    <label for="borrowDate" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Ngày mượn:</label>
+                                    <input type="date" id="borrowDate" name="borrowDate" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;">
+
+                                    <label for="returnDate" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Ngày trả:</label>
+                                    <input type="date" id="returnDate" name="returnDate" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;">
+
+                                    <label for="photo" style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Chụp ảnh căn cước công dân:</label>
+                                    <input type="file" id="photo" name="photo" accept="image/*" capture="camera" style="margin-bottom: 15px; font-size: 14px;">
+
+                                    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                                        <button type="button" onclick="generateQRCode()" style="flex: 1; padding: 2px 0; font-size: 14px; font-weight: bold; border: none; border-radius: 5px 0 0 5px; cursor: pointer; background-color: #007bff; color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+                                            Tạo mã QR
+                                        </button>
+                                        <button type="button" onclick="closePopup()" style="flex: 1; padding: 2px 0; font-size: 14px; font-weight: bold; border: none; border-radius: 0 5px 5px 0; cursor: pointer; background-color: #6c757d; color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+                                            Hủy
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="text-center" id="qrCodeContainer" style="margin-top: 20px;">
+                                    <!-- Placeholder for QR Code -->
+                                    <img id="qrCode" src="https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0" class="qr-code img-thumbnail img-responsive" style="display: none; margin: 0 auto;" />
+                                </div>
+                            </div>
+
+                            <script>
+                                function showBorrowForm() {
+                                    document.getElementById("borrowFormPopup").style.display = "block";
+                                    document.getElementById("popupOverlay").style.display = "block";
+                                }
+                                function closePopup() {
+                                    // Reset the form fields
+                                    document.getElementById("borrowForm").reset();
+                                    // Reset the QR code display and clear its source
+                                    var qrCodeImage = document.getElementById("qrCode");
+                                    qrCodeImage.style.display = "none"; // Hide the QR code
+                                    qrCodeImage.src = "https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0"; // Reset the QR code to default image
+                                    // Close the popup
+                                    document.getElementById("borrowFormPopup").style.display = "none";
+                                    document.getElementById("popupOverlay").style.display = "none";
+                                }
+                                // Hàm tạo mã QR
+                                function generateQRCode() {
+                                    var receiverName1 = document.getElementById("receiverName1").value;
+                                    var receiverPhone1 = document.getElementById("receiverPhone1").value;
+                                    var receiverAddress1 = document.getElementById("receiverAddress1").value;
+                                    var bookToBorrow1 = document.getElementById("bookToBorrow").value;
+                                    var idNumber1 = document.getElementById("idNumber").value;
+                                    var borrowDate1 = document.getElementById("borrowDate").value;
+                                    var returnDate1 = document.getElementById("returnDate").value;
+
+                                    // Kiểm tra xem thông tin có đầy đủ hay không
+                                    if (!receiverName1 || !idNumber1 || !receiverPhone1 || !receiverAddress1 || !bookToBorrow1 || !borrowDate1 || !returnDate1) {
+                                        alert("Vui lòng điền đầy đủ thông tin!");
+                                        return;
+                                    }
+
+                                    var qrData = `
+           Tên người mượn: ${receiverName1}\n
+           Số điện thoại: ${receiverPhone1}\n
+           Địa chỉ: ${receiverAddress1}\n
+           Quyển sách cần mượn: ${bookToBorrow1}\n
+           Số căn cước công dân: ${idNumber1}\n
+           Ngày mượn: ${borrowDate1}\n
+           Ngày trả: ${returnDate1}`;
+
+                                    var qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=160x160`;
+                                    var qrCodeImage = document.getElementById("qrCode");
+                                    qrCodeImage.src = qrCodeURL;
+                                    qrCodeImage.style.display = "block"; // Show the QR code after it's generated
+                                }
+                            </script>
+
                         </nav>
                     </div>
                 </div>

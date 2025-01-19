@@ -1,5 +1,4 @@
 package com.book_store.service;
-
 import com.book_store.entity.Category;
 import com.book_store.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 @Service
 public class CategoriesService {
     @Autowired
